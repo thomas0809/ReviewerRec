@@ -514,6 +514,26 @@ function showMore() {
   window.sessionStorage.displaynum = String(displaynum);
 }
 
+//3.0.5
+function getFirstEmail(src) //if multiple emails in src (divided by ',') then return the first email address
+{
+  var commaIndex = src.indexOf(",");
+  if (commaIndex == -1) {
+    return src;
+  } else {
+    var ret = src.substr(0, commaIndex);
+    alert("Mutiple email addresses. Select the first one (" + ret + ").")
+    return ret;
+  }
+}
+
+//copyright: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+function validateEmail(email) {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+//3.0.5
+
 function fillin(i) {
   //alert(i);
   var fstname = explist[i].name.split(' ')[0];
@@ -523,6 +543,15 @@ function fillin(i) {
   var eadd = explist[i].email;
   if (eadd == null)
     eadd = "";
+  //3.05
+  eadd = getFirstEmail(eadd);
+  if (validateEmail(eadd)) {
+
+  } else {
+    eadd = ""
+    alert("Email address not valid!")
+  }
+  //3.05
   document.getElementsByName("EMAIL_ADDRESS")[0].value = eadd;
 }
 
